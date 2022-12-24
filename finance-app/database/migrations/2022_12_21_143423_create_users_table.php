@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('email');
             $table->string('password');
             $table->string('token');
-            $table->date('expiresAt');
+            $table->datetime('expiresAt');
             $table->timestamps();
         });
     }

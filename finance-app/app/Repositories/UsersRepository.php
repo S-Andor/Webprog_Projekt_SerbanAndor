@@ -4,15 +4,57 @@ namespace App\Repositories;
 
 use App\Interfaces\IUsersRepository;
 use App\Models\User;
-use Illuminate\Support\Facades\DB;
+use DateTime;
+use DateTimeZone;
 
 class UsersRepository implements IUsersRepository
 {
 
     public function login($email, $password)
     {
-        return DB::table('users')
+        $user = User::query()
             ->where('email','=',$email)
-            ->where('password','=',$password);
+            ->where('password','=',$password)
+            ->first();
+
+        if (isset($user->id)){
+
+            $token = bin2hex(random_bytes(16));
+            $date = new DateTime('now',new DateTimeZone('UTC'));
+            $date->modify('+15 minutes');
+
+            User::query()
+                ->where('id', $user->id)
+                ->update(['token' => $token, 'expiresAt' => $date]);
+
+            return  User::query()
+                ->where('id','=',$user->id)
+                ->first(['id','token']);
+
+        }
+        else{
+            return null;
+        }
+
     }
+
+    public function checkToken($id, $token){
+        $user = User::query()
+            ->where('id','=',$id)
+            ->where('token','=',$token)
+            ->first();
+
+        if (isset($user->id)){
+            $date = new DateTime('now',new DateTimeZone('UTC'));
+            $expires =  new DateTime($user->expiresAt,new DateTimeZone('UTC'));
+            if ($token == $user->token && $expires > $date){
+                return  true;
+            }
+
+        }
+
+        return false;
+    }
+
+
 }

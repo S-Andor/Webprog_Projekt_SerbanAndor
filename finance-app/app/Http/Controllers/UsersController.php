@@ -20,4 +20,7 @@ class UsersController extends Controller
     public function login(Request $request){
         return response()->json($this->usersRepository->login($request->get('email'),$request->get('password')));
     }
+    public function checkToken(Request $request){
+        return response()->json($this->usersRepository->checkToken($request->get('id'),$request->get('token')));
+    }
 }

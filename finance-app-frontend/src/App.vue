@@ -1,13 +1,18 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
     <router-view/>
   </div>
 </template>
 
 <script>
+import checkTokenMixin from '../src/mixins/checkTokenMixin';
+
 export default {
-  name: 'App'
+  name: 'App',
+  mixins:[checkTokenMixin],
+  mounted() {
+
+  }
 }
 </script>
 
