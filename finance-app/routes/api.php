@@ -10,6 +10,7 @@ Route::get('/check-token',[App\Http\Controllers\UsersController::class,'checkTok
 
 //Transaction categories
 Route::get('/categories',[App\Http\Controllers\TransactionsController::class,'getAllTransactionCategories']);
+Route::post('/transaction',[App\Http\Controllers\TransactionsController::class,'saveTransaction']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
