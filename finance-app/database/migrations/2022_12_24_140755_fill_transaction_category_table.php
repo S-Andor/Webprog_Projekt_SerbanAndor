@@ -16,16 +16,16 @@ return new class extends Migration
     {
         DB::table('transactions_categories')
             ->insert([
-                ['name' => 'Family', 'code' => 'FAM','type' => 'expense', 'mdi_icon' => ''],
-                ['name' => 'Health', 'code' => 'HEALTH','type' => 'expense', 'mdi_icon' => ''] ,
-                ['name' => 'Groceries', 'code' => 'GROCERIES','type' => 'expense', 'mdi_icon' => ''],
-                ['name' => 'Health', 'code' => 'HEALTH','type' => 'expense', 'mdi_icon' => ''] ,
-                ['name' => 'Restaurant', 'code' => 'RESTAURANT','type' => 'expense', 'mdi_icon' => ''],
-                ['name' => 'Free time', 'code' => 'FREE_TIME','type' => 'expense', 'mdi_icon' => ''] ,
-                ['name' => 'Commute', 'code' => 'COMMUTE','type' => 'expense', 'mdi_icon' => ''],
-                ['name' => 'Gifts', 'code' => 'GIFTS','type' => 'expense', 'mdi_icon' => ''] ,
-                ['name' => 'Shopping', 'code' => 'SHOPPING','type' => 'expense', 'mdi_icon' => ''] ,
-                ['name' => 'Income', 'code' => 'INCOME','type' => 'income', 'mdi_icon' => '']
+                ['name' => 'Family', 'code' => 'FAM'],
+                ['name' => 'Health', 'code' => 'HEALTH'] ,
+                ['name' => 'Groceries', 'code' => 'GROCERIES'],
+                ['name' => 'Health', 'code' => 'HEALTH'] ,
+                ['name' => 'Restaurant', 'code' => 'RESTAURANT'],
+                ['name' => 'Free time', 'code' => 'FREE_TIME'] ,
+                ['name' => 'Commute', 'code' => 'COMMUTE'],
+                ['name' => 'Gifts', 'code' => 'GIFTS'] ,
+                ['name' => 'Shopping', 'code' => 'SHOPPING'] ,
+                ['name' => 'Income', 'code' => 'INCOME']
             ]);
     }
 

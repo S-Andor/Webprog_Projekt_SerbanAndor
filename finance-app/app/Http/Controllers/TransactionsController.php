@@ -15,7 +15,4 @@ class TransactionsController extends Controller
     public function getAllTransactionCategories(){
         return response()->json($this->transactionRepository->getCategories());
     }
-    public function saveTransaction(Request $request){
-        return response()->json($this->transactionRepository->saveTransaction($request));
-    }
 }
