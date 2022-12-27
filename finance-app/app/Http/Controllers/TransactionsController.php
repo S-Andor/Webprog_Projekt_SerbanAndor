@@ -18,4 +18,13 @@ class TransactionsController extends Controller
     public function saveTransaction(Request $request){
         return response()->json($this->transactionRepository->saveTransaction($request));
     }
+    public function getTransactionsById(Request $request){
+        return response()->json($this->transactionRepository->getTransactionsById($request->get('id')));
+    }
+    public function getTransactionsByDate(Request $request){
+        return response()->json($this->transactionRepository->getTransactionsByDate($request));
+    }
+    public function getTransactionList(Request $request){
+        return response()->json($this->transactionRepository->listTransactions($request));
+    }
 }

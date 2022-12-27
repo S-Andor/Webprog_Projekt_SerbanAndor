@@ -7,6 +7,9 @@
   >
 
   <v-text-field
+      class="mx-auto"
+      outlined
+      style="max-width: 350px"
       v-model="email"
       :rules="emailRules"
       label="E-mail"
@@ -14,6 +17,9 @@
   ></v-text-field>
 
     <v-text-field
+        class="mx-auto"
+        outlined
+        style="max-width: 350px"
         v-model="password"
         type="password"
         label="Password"

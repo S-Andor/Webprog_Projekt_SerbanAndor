@@ -21,7 +21,7 @@ export default {
     return{
       showDialog: false,
       categories:[],
-      selectedCategory: ''
+      selectedCategory: '',
     }
   },
   mounted() {
