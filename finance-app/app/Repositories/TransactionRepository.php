@@ -61,8 +61,23 @@ class TransactionRepository implements ITransactionRepository
             ->where('date','>=',$filter->get('fromDate'))
             ->where('date','<=',$filter->get('toDate'))
             ->join('transactions_categories', 'transactions.transaction_category_id', '=', 'transactions_categories.id')
-            ->groupBy(['transactions_categories.name'])
-            ->get(['transactions.id','transactions_categories.name','date', 'amount']);
+            ->groupBy(['date','name'])
+            ->orderBy('date', 'desc')
+            ->selectRaw('transactions.id, transactions_categories.name, date, SUM(amount) AS amount , transactions_categories.mdi_icon AS icon, type')
+            ->get();
         return $transactions;
+    }
+
+    public function getBalance($filter)
+    {
+        $balances = Transaction::query()
+        ->where('user_id','=',$filter->get('id'))
+        ->where('date','>=',$filter->get('fromDate'))
+        ->where('date','<=',$filter->get('toDate'))
+        ->join('transactions_categories', 'transactions.transaction_category_id', '=', 'transactions_categories.id')
+        ->groupBy('type')
+        ->selectRaw('SUM(amount) AS amount ,type')
+        ->get();
+        return $balances;
     }
 }

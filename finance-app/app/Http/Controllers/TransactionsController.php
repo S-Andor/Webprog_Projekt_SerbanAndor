@@ -27,4 +27,7 @@ class TransactionsController extends Controller
     public function getTransactionList(Request $request){
         return response()->json($this->transactionRepository->listTransactions($request));
     }
+    public function getBalance(Request $request){
+        return response()->json($this->transactionRepository->getBalance($request));
+    }
 }

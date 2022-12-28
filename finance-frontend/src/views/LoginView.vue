@@ -1,6 +1,7 @@
 <template>
 <div>
   <v-form
+      class="mt-15"
     ref="form"
     v-model="valid"
     lazy-validation

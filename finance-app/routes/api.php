@@ -15,6 +15,7 @@ Route::post('/transaction',[App\Http\Controllers\TransactionsController::class,'
 Route::get('/transaction-by-id',[App\Http\Controllers\TransactionsController::class,'getTransactionsById']);
 Route::get('/transaction-by-date',[App\Http\Controllers\TransactionsController::class,'getTransactionsByDate']);
 Route::get('/list-transaction',[App\Http\Controllers\TransactionsController::class,'getTransactionList']);
+Route::get('/balance',[App\Http\Controllers\TransactionsController::class,'getBalance']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

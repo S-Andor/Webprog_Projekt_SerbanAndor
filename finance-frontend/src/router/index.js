@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import LoginView from "@/views/LoginView";
 import OverView from "@/views/OverView";
+import TransactionsView from "@/views/TransactionsView";
 
 Vue.use(VueRouter)
 
@@ -13,13 +14,6 @@ const routes = [
     component: HomeView
   },
   {
-    path: '/about',
-    name: 'about',
-    component: function () {
-      return import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-    }
-  },
-  {
     path: '/login',
     name: 'login',
     component: LoginView
@@ -28,6 +22,11 @@ const routes = [
     path: '/overview',
     name: 'overview',
     component: OverView
+  },
+  {
+    path: '/transactions',
+    name: 'transactions',
+    component: TransactionsView
   }
 ]
 

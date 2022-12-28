@@ -9,4 +9,5 @@ interface ITransactionRepository
     public function getTransactionsById($id);
     public function getTransactionsByDate($filter);
     public function listTransactions($filter);
+    public function getBalance($filter);
 }
