@@ -46,12 +46,13 @@ class TransactionRepository implements ITransactionRepository
             ->where('user_id','=',$filter->get('id'))
             ->where('date','>=',$filter->get('fromDate'))
             ->where('date','<=',$filter->get('toDate'))
-            ->get(['id','transaction_category_id','date', 'amount']);
+            ->groupBy(['date','transaction_category_id'])
+            ->selectRaw('id, transaction_category_id, date, SUM(amount) AS amount')
+            ->get();
 
         $overview = new TransactionsOverview();
-        TransactionOverviewHelper::getOverviewExpenseAndIncome($overview,$transactions);
+        $overview->transactions = $transactions;
         TransactionOverviewHelper::calculateCategoryInfo($overview,$transactions);
-
 
         return $overview;
     }

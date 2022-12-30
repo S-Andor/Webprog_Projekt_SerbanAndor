@@ -22,6 +22,7 @@
         outlined
         style="max-width: 350px"
         v-model="password"
+        :rules="passwordRules"
         type="password"
         label="Password"
         required
@@ -35,7 +36,10 @@
   </v-btn>
 
   <v-btn
+      type="submit"
+      :disabled="!valid"
       class="mr-4"
+      @click="register"
   >
     Register
   </v-btn>
@@ -56,6 +60,9 @@ export default {
         v => !!v || 'E-mail is required',
         v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
       ],
+      passwordRules:[
+          v=> !!v || 'Password is required'
+      ]
     }
   },
   mounted() {
@@ -67,6 +74,7 @@ export default {
   },
   methods: {
     login () {
+      this.$refs.form.validate();
       axios.post('http://127.0.0.1:8000/api/login', {email: this.email, password: this.password}).then(res =>
           {
             if (res.data != null){
@@ -76,8 +84,24 @@ export default {
             }
           }
       )
+    },
+    register(){
+      this.$refs.form.validate();
+      axios.post('http://127.0.0.1:8000/api/register', {email: this.email, password: this.password}).then(res =>
+          {
+            if (res.data  !=  null){
+              localStorage.token = res.data.token;
+              localStorage.user = res.data.id;
+              this.$router.push('/')
+              console.log('push')
+            }
+          }
+      )
     }
   },
+  register(){
+
+  }
 }
 </script>
 

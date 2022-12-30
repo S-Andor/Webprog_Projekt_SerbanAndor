@@ -7,7 +7,7 @@
       <v-card-title style="height: 50px" class="d-flex justify-space-between pa-0 pb-5">
         <v-sheet
           style="width: 50%"
-          color="primary">
+          color="blue">
           <span class="white--text">
           {{category.name}}
           </span>
@@ -80,7 +80,7 @@ export default {
             user_id: localStorage.user,
             date: this.date,
             amount: this.amount,
-          })
+          }).then(this.$emit('close'))
     },
     setDate(date){
       this.date = date

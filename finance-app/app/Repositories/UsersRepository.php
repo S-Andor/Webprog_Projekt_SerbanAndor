@@ -56,5 +56,33 @@ class UsersRepository implements IUsersRepository
         return false;
     }
 
+    public function register($email, $password){
+        $user = User::query()
+            ->where('email','=',$email)
+            ->first();
+
+        if (isset($user->id)){
+            return false;
+        }
+
+        $token = bin2hex(random_bytes(16));
+        $date = new DateTime('now',new DateTimeZone('UTC'));
+        $expires = $date->modify('+15 minutes');
+
+        $id = User::query()
+            ->insertGetId([
+                'email' => $email,
+                'password' => $password,
+                'token' => $token,
+                'expiresAt' => $expires,
+                'created_at' => $date,
+                'updated_at' => $date,
+            ]);
+
+        return User::query()
+            ->where('id','=',$id)
+            ->first(['id','token']);
+
+    }
 
 }

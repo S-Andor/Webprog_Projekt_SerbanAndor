@@ -21,7 +21,7 @@ export default {
   data(){
     return{
       transactions: [],
-      balance: 0,
+      balance: [{type : 'income', amount: 0}, {type : 'expense', amount: 0}],
       fromDate: '',
       toDate: ''
     }

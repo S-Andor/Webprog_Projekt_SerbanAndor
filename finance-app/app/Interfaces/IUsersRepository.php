@@ -6,4 +6,5 @@ interface IUsersRepository
 {
     public function login($email,$password);
     public function checkToken($id, $token);
+    public function register($email,$password);
 }

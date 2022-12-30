@@ -8,26 +8,6 @@ use App\Models\TransactionsOverview;
 
 class TransactionOverviewHelper
 {
-        public static function getOverviewExpenseAndIncome($overview,$transactions){
-
-            $income = 0;
-            $expense = 0;
-
-            foreach ($transactions as $tran){
-                $category = TransactionCategory::query()
-                    ->where('id', '=',$tran->transaction_category_id)
-                    ->first(['id','type']);
-                if ($category->type == 'income'){
-                    $income += $tran->amount;
-                }else if ($category->type == 'expense'){
-                    $expense += $tran->amount;
-                }
-            }
-
-            $overview->transactions = $transactions;
-            $overview->expense = $expense;
-            $overview->income = $income;
-        }
 
         public static function calculateCategoryInfo($overview,$transactions){
             $categories = [];
@@ -36,18 +16,19 @@ class TransactionOverviewHelper
 
                 $category = TransactionCategory::query()
                     ->where('id', '=',$tran->transaction_category_id)
-                    ->first(['id','name','code']);
-                $total++;
-                $categoryInfo = new CategoryInfo($category->code,$category->name,1);
+                    ->first(['id','name','code','mdi_icon']);
+                $total+= $tran->amount;
+                $categoryInfo = new CategoryInfo($category->code,$category->name, $category->mdi_icon);
                 if (array_key_exists($category->code,$categories)){
-                    $categories[$category->code]->count += 1;
+                    $categories[$category->code]->amount += $tran->amount;
                 }else{
                     $categories[$category->code] = $categoryInfo;
+                    $categories[$category->code]->amount = $tran->amount;
                 }
             }
 
             foreach ($categories as $category){
-                $categories[$category->code]->percentage =$categories[$category->code]->count * 100 / $total;
+                $categories[$category->code]->percentage =$categories[$category->code]->amount * 100 / $total;
             }
             $overview->categoryInfo = $categories;
         }

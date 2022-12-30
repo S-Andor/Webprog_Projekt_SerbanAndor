@@ -6,18 +6,19 @@ class CategoryInfo
 {
     public string $code;
     public string $name;
-    public int $count;
     public float $percentage;
+    public float $amount;
+    public string $icon;
 
     /**
      * @param string $code
      * @param string $name
      * @param int $count
      */
-    public function __construct(string $code, string $name, int $count)
+    public function __construct(string $code, string $name,string $icon)
     {
         $this->code = $code;
         $this->name = $name;
-        $this->count = $count;
+        $this->icon = $icon;
     }
 }
