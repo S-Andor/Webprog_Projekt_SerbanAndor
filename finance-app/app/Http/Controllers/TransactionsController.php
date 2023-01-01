@@ -18,9 +18,6 @@ class TransactionsController extends Controller
     public function saveTransaction(Request $request){
         return response()->json($this->transactionRepository->saveTransaction($request));
     }
-    public function getTransactionsById(Request $request){
-        return response()->json($this->transactionRepository->getTransactionsById($request->get('id')));
-    }
     public function getTransactionsByDate(Request $request){
         return response()->json($this->transactionRepository->getTransactionsByDate($request));
     }
@@ -29,5 +26,20 @@ class TransactionsController extends Controller
     }
     public function getBalance(Request $request){
         return response()->json($this->transactionRepository->getBalance($request));
+    }
+    public function getAverage(Request $request){
+        return response()->json($this->transactionRepository->getAverage($request->get('id')));
+    }
+    public function getTransactionsByUserId(Request $request){
+        return response()->json($this->transactionRepository->getTransactionsByUserId($request->get('id')));
+    }
+    public function getThisDaySpend(Request $request){
+        return response()->json($this->transactionRepository->getDaily($request));
+    }
+    public function editTransaction(Request $request){
+        return response()->json($this->transactionRepository->editTransaction($request));
+    }
+    public function deleteTransaction(Request $request){
+        return response()->json($this->transactionRepository->deleteTransaction($request->get('id')));
     }
 }

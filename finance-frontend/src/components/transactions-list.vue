@@ -9,6 +9,7 @@
       ></span>
 
       <v-card
+          @click="$emit('tranClick',item)"
           class="mx-auto my-2"
           v-else
           :key="item.id"

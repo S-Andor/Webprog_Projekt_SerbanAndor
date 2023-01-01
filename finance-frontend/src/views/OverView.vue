@@ -5,6 +5,7 @@
     </v-sheet>
     <balance-subheader :balance="balance"></balance-subheader>
     <GChart class="mt-5" type="ColumnChart" :data="data" :options="options" />
+    <average-daily-info></average-daily-info>
     <overview-category-info v-for="cat in transactions.categoryInfo" :category="cat"></overview-category-info>
   </div>
 </template>
@@ -16,10 +17,12 @@ import dateMultiplePicker from "@/components/date-multiple-picker";
 import balanceSubheader from "@/components/balance-subheader";
 import overviewCategoryInfo from "@/components/overview-category-info";
 import { GChart } from 'vue-google-charts/legacy';
+import AverageDailyInfo from "@/components/average-daily-info";
 export default {
   name: "OverView",
   mixins:[authMixin],
   components:{
+    AverageDailyInfo,
     dateMultiplePicker,
     balanceSubheader,
     overviewCategoryInfo,
@@ -91,11 +94,13 @@ export default {
     chartFill(){
       this.data = []
       this.data.push(this.categories)
-      console.log(this.transactions.transactions)
+
       let date = this.transactions.transactions[0].date
       let array = []
+
       this.categories.forEach(c => array.push(0))
       array.splice(0, 1, date);
+
       for (let i = 0; i < this.transactions.transactions.length; i++){
         if (date === this.transactions.transactions[i].date){
           array.splice(this.transactions.transactions[i].transaction_category_id, 1, Number(this.transactions.transactions[i].amount));

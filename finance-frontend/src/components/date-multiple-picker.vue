@@ -12,7 +12,7 @@
           class="mx-auto mt-0 pt-7"
           style="max-width: 450px"
           v-model="dateRangeText"
-          label="Picker in dialog"
+          label="Pick a date"
           prepend-inner-icon="mdi-calendar"
           readonly
           v-bind="attrs"

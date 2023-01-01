@@ -12,7 +12,7 @@
           outlined
           rounded
           v-model="date"
-          label="Picker without buttons"
+          label="Pick a date"
           prepend-inner-icon="mdi-calendar"
           readonly
           v-bind="attrs"
@@ -29,10 +29,21 @@
 <script>
 export default {
   name: "date-picker",
+  props:{
+    propDate:{
+      type: String,
+      required: false
+    }
+  },
   data(){
     return{
       date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
       menu: false,
+    }
+  },
+  mounted() {
+    if (this.propDate){
+      this.date = this.propDate
     }
   },
   methods:{

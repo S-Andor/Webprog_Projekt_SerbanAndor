@@ -33,7 +33,7 @@ class TransactionRepository implements ITransactionRepository
         );
     }
 
-    public function getTransactionsById($id)
+    public function getTransactionsByUserId($id)
     {
         return Transaction::query()
             ->where('user_id','=',$id)
@@ -62,9 +62,8 @@ class TransactionRepository implements ITransactionRepository
             ->where('date','>=',$filter->get('fromDate'))
             ->where('date','<=',$filter->get('toDate'))
             ->join('transactions_categories', 'transactions.transaction_category_id', '=', 'transactions_categories.id')
-            ->groupBy(['date','name'])
             ->orderBy('date', 'desc')
-            ->selectRaw('transactions.id, transactions_categories.name, date, SUM(amount) AS amount , transactions_categories.mdi_icon AS icon, type')
+            ->selectRaw('transactions.id, transactions_categories.name, date, amount, transactions_categories.mdi_icon AS icon, type,transaction_category_id')
             ->get();
         return $transactions;
     }
@@ -80,5 +79,45 @@ class TransactionRepository implements ITransactionRepository
         ->selectRaw('SUM(amount) AS amount ,type')
         ->get();
         return $balances;
+    }
+    public function getAverage($id){
+        return  Transaction::query()
+            ->where('user_id','=',$id)
+            ->where('transactions_categories.type','<>','income')
+            ->join('transactions_categories', 'transactions.transaction_category_id', '=', 'transactions_categories.id')
+            ->selectRaw('AVG(amount) AS average ')
+            ->get();
+    }
+
+    public function getDaily($filter)
+    {
+        return Transaction::query()
+            ->where('user_id','=',$filter->get('id'))
+            ->where('date','=',$filter->get('date'))
+            ->where('transactions_categories.type','<>','income')
+            ->join('transactions_categories', 'transactions.transaction_category_id', '=', 'transactions_categories.id')
+            ->selectRaw('SUM(amount) as amount')
+            ->get();
+    }
+
+    public function editTransaction($data)
+    {
+        $date = new DateTime('now', new DateTimeZone('UTC'));
+        Transaction::query()
+            ->where('id','=',$data->get('id'))
+            ->update([
+                'date' => $data->get('date'),
+                'amount' => $data->get('amount'),
+                'transaction_category_id' => $data->get('transaction_category_id'),
+                'updated_at' => $date
+            ]);
+        return $date;
+    }
+
+    public function deleteTransaction($id)
+    {
+        return Transaction::query()
+            ->where('id','=',$id)
+            ->delete();
     }
 }

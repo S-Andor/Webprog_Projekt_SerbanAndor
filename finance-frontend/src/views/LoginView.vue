@@ -5,6 +5,7 @@
     ref="form"
     v-model="valid"
     lazy-validation
+      @keydown.enter="login"
   >
 
   <v-text-field
@@ -14,11 +15,13 @@
       v-model="email"
       :rules="emailRules"
       label="E-mail"
+      @keydown.enter="login"
       required
   ></v-text-field>
 
     <v-text-field
         class="mx-auto"
+        @keydown.enter="login"
         outlined
         style="max-width: 350px"
         v-model="password"
@@ -73,7 +76,8 @@ export default {
     })
   },
   methods: {
-    login () {
+    login (e) {
+      e.preventDefault();
       this.$refs.form.validate();
       axios.post('http://127.0.0.1:8000/api/login', {email: this.email, password: this.password}).then(res =>
           {

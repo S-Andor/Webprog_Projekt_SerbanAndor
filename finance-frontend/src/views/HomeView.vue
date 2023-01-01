@@ -1,7 +1,10 @@
 <template>
-  <div data-app class="home">
-    <category-button @clicked="showCard" v-for="category in categories" :category="category"></category-button>
-    <input-dialog v-if="showDialog" :category="selectedCategory" @close="showDialog = false"></input-dialog>
+  <div data-app >
+    <div class="home">
+      <category-button class="mt-2" @clicked="showCard" v-for="category in categories" :category="category"></category-button>
+      <input-dialog v-if="showDialog" :category="selectedCategory" @close="showDialog = false"></input-dialog>
+
+    </div>
   </div>
 </template>
 
@@ -38,3 +41,8 @@ export default {
   }
 }
 </script>
+<style scoped>
+.home{
+  margin-top: 55px !important;
+}
+</style>

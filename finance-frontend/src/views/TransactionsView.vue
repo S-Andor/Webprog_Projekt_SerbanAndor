@@ -4,7 +4,8 @@
       <date-multiple-picker @pick="refreshList"></date-multiple-picker>
     </v-sheet>
     <balance-subheader :balance="balance"></balance-subheader>
-    <transactions-list :transactions="transactions"></transactions-list>
+    <transactions-list @tranClick="editTransaction" :transactions="transactions"></transactions-list>
+    <transaction-dialog  @close="closeEditor" :transaction="selectedTransaction" v-if="editTransactionDialog"></transaction-dialog>
   </div>
 </template>
 
@@ -14,16 +15,19 @@ import authMixin from "@/mixins/authMixin";
 import axios from "axios";
 import BalanceSubheader from "@/components/balance-subheader";
 import DateMultiplePicker from "@/components/date-multiple-picker";
+import TransactionDialog from "@/components/transaction-dialog";
 export default {
   name: "TransactionsView",
-  components: {DateMultiplePicker, BalanceSubheader, TransactionsList},
+  components: {TransactionDialog, DateMultiplePicker, BalanceSubheader, TransactionsList},
   mixins:[authMixin],
   data(){
     return{
       transactions: [],
       balance: [{type : 'income', amount: 0}, {type : 'expense', amount: 0}],
       fromDate: '',
-      toDate: ''
+      toDate: '',
+      editTransactionDialog: false,
+      selectedTransaction: '',
     }
   },
   mounted() {
@@ -62,14 +66,21 @@ export default {
               this.transactions.push(x)
             }
           })
-
-
         }
       }).then(
           axios.get(`http://127.0.0.1:8000/api/balance?fromDate=${this.fromDate}&toDate=${this.toDate}&id=${localStorage.user}`).then((res) =>{
             this.balance = res.data
           })
       )
+    },
+    editTransaction(transaction){
+      this.selectedTransaction = transaction
+      this.editTransactionDialog = true
+    },
+    closeEditor(){
+      this.editTransactionDialog = false
+      //window.location.reload()
+      this.fillList()
     }
   }
 }
