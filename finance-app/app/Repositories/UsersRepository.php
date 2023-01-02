@@ -21,7 +21,7 @@ class UsersRepository implements IUsersRepository
 
             $token = bin2hex(random_bytes(16));
             $date = new DateTime('now',new DateTimeZone('UTC'));
-            $date->modify('+15 minutes');
+            $date->modify('+60 minutes');
 
             User::query()
                 ->where('id', $user->id)
@@ -33,7 +33,7 @@ class UsersRepository implements IUsersRepository
 
         }
         else{
-            return null;
+            return 'Wrong email or password';
         }
 
     }
@@ -62,12 +62,12 @@ class UsersRepository implements IUsersRepository
             ->first();
 
         if (isset($user->id)){
-            return false;
+            return 'Email is already in use';
         }
 
         $token = bin2hex(random_bytes(16));
         $date = new DateTime('now',new DateTimeZone('UTC'));
-        $expires = $date->modify('+15 minutes');
+        $expires = $date->modify('+60 minutes');
 
         $id = User::query()
             ->insertGetId([

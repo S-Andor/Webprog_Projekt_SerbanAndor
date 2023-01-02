@@ -7,7 +7,7 @@
     lazy-validation
       @keydown.enter="login"
   >
-
+  <span v-if="errorMessage" class="h2 red--text">{{errorMessage}}</span>
   <v-text-field
       class="mx-auto"
       outlined
@@ -65,7 +65,8 @@ export default {
       ],
       passwordRules:[
           v=> !!v || 'Password is required'
-      ]
+      ],
+      errorMessage: ''
     }
   },
   mounted() {
@@ -82,9 +83,14 @@ export default {
       axios.post('http://127.0.0.1:8000/api/login', {email: this.email, password: this.password}).then(res =>
           {
             if (res.data != null){
-              localStorage.token = res.data.token;
-              localStorage.user = res.data.id;
-              this.$router.push('/')
+              if (res.data.id && res.data.token){
+                localStorage.token = res.data.token;
+                localStorage.user = res.data.id;
+                this.$router.push('/')
+              }else {
+                this.errorMessage = res.data
+              }
+
             }
           }
       )
@@ -94,10 +100,14 @@ export default {
       axios.post('http://127.0.0.1:8000/api/register', {email: this.email, password: this.password}).then(res =>
           {
             if (res.data  !=  null){
-              localStorage.token = res.data.token;
-              localStorage.user = res.data.id;
-              this.$router.push('/')
-              console.log('push')
+              if (res.data.id && res.data.token){
+                localStorage.token = res.data.token;
+                localStorage.user = res.data.id;
+                this.$router.push('/')
+              }
+              else {
+                this.errorMessage = res.data
+              }
             }
           }
       )

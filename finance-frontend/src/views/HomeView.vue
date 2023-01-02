@@ -1,6 +1,7 @@
 <template>
   <div data-app >
     <div class="home">
+      <span style="font-size: 30px">Add transaction:</span>
       <category-button class="mt-2" @clicked="showCard" v-for="category in categories" :category="category"></category-button>
       <input-dialog v-if="showDialog" :category="selectedCategory" @close="showDialog = false"></input-dialog>
 
@@ -34,7 +35,6 @@ export default {
   },
   methods:{
     showCard(code){
-      console.log(code)
       this.selectedCategory = this.categories.find(x => x.code === code)
       this.showDialog = true
     }

@@ -4,7 +4,8 @@
       <date-multiple-picker @pick="refreshList"></date-multiple-picker>
     </v-sheet>
     <balance-subheader :balance="balance"></balance-subheader>
-    <transactions-list @tranClick="editTransaction" :transactions="transactions"></transactions-list>
+    <transactions-list v-if="transactions.length > 0" @tranClick="editTransaction" :transactions="transactions"></transactions-list>
+    <span v-else style="font-size: 80px">There are no transactions to display</span>
     <transaction-dialog  @close="closeEditor" :transaction="selectedTransaction" v-if="editTransactionDialog"></transaction-dialog>
   </div>
 </template>
@@ -79,7 +80,6 @@ export default {
     },
     closeEditor(){
       this.editTransactionDialog = false
-      //window.location.reload()
       this.fillList()
     }
   }

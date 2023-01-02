@@ -2,7 +2,7 @@
   <v-sheet class="d-flex justify-space-between mx-15">
     <v-card style="width: 100%" class="d-flex flex-column">
       <span>Daily average:</span>
-      <span>{{Number(dailyAvg[0].average).toFixed(2)}}</span>
+      <span>{{Number(dailyAvg).toFixed(2)}}</span>
     </v-card>
     <v-card style="width: 100%" class="d-flex flex-column">
       <span>Spending today:</span>

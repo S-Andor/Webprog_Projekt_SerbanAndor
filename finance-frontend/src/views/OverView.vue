@@ -4,7 +4,8 @@
       <date-multiple-picker @pick="refreshList"></date-multiple-picker>
     </v-sheet>
     <balance-subheader :balance="balance"></balance-subheader>
-    <GChart class="mt-5" type="ColumnChart" :data="data" :options="options" />
+    <GChart v-if="data.length > 1" class="mt-5" type="ColumnChart" :data="data" :options="options" />
+    <span v-else style="font-size: 80px">There are no transactions to display</span>
     <average-daily-info></average-daily-info>
     <overview-category-info v-for="cat in transactions.categoryInfo" :category="cat"></overview-category-info>
   </div>

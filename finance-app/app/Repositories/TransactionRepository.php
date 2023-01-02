@@ -3,7 +3,6 @@
 namespace App\Repositories;
 
 use App\Interfaces\ITransactionRepository;
-use App\Models\CategoryInfo;
 use App\Models\Transaction;
 use App\Models\TransactionCategory;
 use App\Models\TransactionsOverview;
@@ -81,12 +80,21 @@ class TransactionRepository implements ITransactionRepository
         return $balances;
     }
     public function getAverage($id){
-        return  Transaction::query()
+        $sums = Transaction::query()
             ->where('user_id','=',$id)
             ->where('transactions_categories.type','<>','income')
             ->join('transactions_categories', 'transactions.transaction_category_id', '=', 'transactions_categories.id')
-            ->selectRaw('AVG(amount) AS average ')
+            ->groupBy('date')
+            ->selectRaw('SUM(amount) AS amount ')
             ->get();
+        $total = 0;
+        $count = 0;
+        foreach ($sums as $tranSum){
+            $total += $tranSum->amount;
+            $count++;
+        }
+        return $total/$count;
+
     }
 
     public function getDaily($filter)
